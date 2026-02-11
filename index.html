@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Eniola ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+/* BACKGROUND */
+body {
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #533483);
+    background-size: 400% 400%;
+    animation: gradientMove 18s ease infinite;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    text-align: center;
+}
+
+@keyframes gradientMove {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+/* GLASS CARD */
+.container {
+    position: relative;
+    z-index: 2;
+    top: 20%;
+    width: 80%;
+    max-width: 700px;
+    margin: auto;
+    padding: 50px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    opacity: 0;
+    transform: scale(0.95);
+    animation: fadeIn 2.2s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* TEXT */
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    margin-bottom: 30px;
+}
+
+/* BUTTONS */
+button {
+    padding: 15px 35px;
+    margin: 20px;
+    font-size: 19px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+#yes {
+    background: linear-gradient(45deg, #ff4e50, #f9d423);
+    color: white;
+    box-shadow: 0 0 25px rgba(255, 78, 80, 0.6);
+}
+
+#yes:hover {
+    transform: scale(1.12);
+    box-shadow: 0 0 45px rgba(255, 78, 80, 0.9);
+}
+
+#no {
+    background: #444;
+    color: white;
+    position: absolute;
+    padding: 14px 30px;
+    font-size: 17px;
+}
+
+/* FLOATING HEARTS + SPARKLES */
+.heart {
+    position: absolute;
+    color: #ff4e50;
+    alpha: 0.8;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(100vh);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body onclick="enableSound()">
+
+<!-- MUSIC (STARTS MUTED UNTIL CLICK) -->
+<iframe id="bgmusic" width="0" height="0"
+src="https://www.youtube.com/embed/6POZlJAZsok?autoplay=1&loop=1&playlist=6POZlJAZsok&mute=1"
+frameborder="0" allow="autoplay"></iframe>
+
+<div class="container">
+    <h1>Will You Be My Valentine,<br>Eniola Onipede?</h1>
+    <p class="subtitle">My heart chose you. Always you. ❤️</p>
+    <button id="yes" onclick="yesClicked()">YES 💖</button>
+    <button id="no" onmouseover="moveButton()">NO 😅</button>
+</div>
+
+<script>
+/* SOUND ENABLER */
+function enableSound() {
+    const iframe = document.getElementById("bgmusic");
+    iframe.src = iframe.src.replace("mute=1", "mute=0");
+}
+
+/* YES CLICK → FIREWORKS & MESSAGE */
+function yesClicked() {
+    document.body.innerHTML = `
+    <div style="margin-top:25%; text-align:center;">
+        <h1 style="font-size:3rem;">She Said YES 💕</h1>
+        <p style="font-size:1.5rem;">Best decision of my life.</p>
+    </div>`;
+    for (let i = 0; i < 120; i++) createHearts();
+}
+
+/* RUNAWAY "NO" BUTTON */
+function moveButton() {
+    const button = document.getElementById("no");
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 80);
+    button.style.left = x + "px";
+    button.style.top = y + "px";
+}
+
+/* HEARTS & SPARKLES */
+function createHearts() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+
+    if (Math.random() > 0.7) {
+        heart.innerHTML = "✨";
+        heart.style.color = "white";
+    } else {
+        heart.innerHTML = "❤";
+    }
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 24 + 10 + "px";
+    heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 5000);
+}
+
+setInterval(createHearts, 250);
+</script>
+
+</body>
+</html>
