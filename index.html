@@ -9,9 +9,7 @@
 
 <style>
 
-/* =========================
-   🌌 ANIMATED BACKGROUND
-========================= */
+/* 🌌 Animated Background */
 body {
     margin: 0;
     overflow: hidden;
@@ -29,9 +27,7 @@ body {
     100% {background-position: 0% 50%;}
 }
 
-/* =========================
-   💎 GLASS CARD
-========================= */
+/* 💎 Glass Card */
 .container {
     position: relative;
     z-index: 2;
@@ -56,9 +52,7 @@ body {
     }
 }
 
-/* =========================
-   ✍️ TEXT STYLING
-========================= */
+/* ✍️ Text */
 h1 {
     font-family: 'Playfair Display', serif;
     font-size: 3rem;
@@ -72,9 +66,7 @@ h1 {
     min-height: 30px;
 }
 
-/* =========================
-   🔘 BUTTONS
-========================= */
+/* 🔘 Buttons */
 button {
     padding: 15px 35px;
     margin: 20px;
@@ -103,9 +95,7 @@ button {
     position: absolute;
 }
 
-/* =========================
-   💖 FLOATING HEARTS
-========================= */
+/* 💖 Floating Hearts */
 .heart {
     position: absolute;
     animation: floatUp linear infinite;
@@ -133,7 +123,7 @@ canvas {
 
 <body onclick="enableSound()">
 
-<!-- 🎵 YouTube Embed -->
+<!-- 🎵 YouTube Music -->
 <iframe id="bgmusic" width="0" height="0"
 src="https://www.youtube.com/embed/6POZlJAZsok?autoplay=1&loop=1&playlist=6POZlJAZsok&mute=1"
 frameborder="0" allow="autoplay"></iframe>
@@ -147,17 +137,13 @@ frameborder="0" allow="autoplay"></iframe>
 
 <script>
 
-/* =========================
-   🎵 ENABLE SOUND
-========================= */
+/* 🎵 Enable Sound */
 function enableSound() {
     const iframe = document.getElementById("bgmusic");
     iframe.src = iframe.src.replace("mute=1", "mute=0");
 }
 
-/* =========================
-   ✍️ TYPING EFFECT
-========================= */
+/* ✍️ Typing Effect */
 const mainMessage = "Will You Be My Valentine,";
 const nameMessage = "Eniola Onipede?";
 const subMessage = "My heart chose you. Always you. ❤️";
@@ -197,9 +183,7 @@ window.onload = () => {
     setTimeout(typeMain, 800);
 };
 
-/* =========================
-   😅 RUNAWAY BUTTON
-========================= */
+/* 😅 Runaway NO */
 function moveButton() {
     const button = document.getElementById("no");
     const x = Math.random() * (window.innerWidth - 120);
@@ -208,21 +192,13 @@ function moveButton() {
     button.style.top = y + "px";
 }
 
-/* =========================
-   💖 FLOATING HEARTS
-========================= */
+/* 💖 Floating Hearts */
 function createHearts() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
 
-    if (Math.random() > 0.7) {
-        heart.innerHTML = "✨";
-        heart.style.color = "white";
-    } else {
-        heart.innerHTML = "❤";
-        heart.style.color = "#ff4e50";
-    }
-
+    heart.innerHTML = Math.random() > 0.7 ? "✨" : "❤";
+    heart.style.color = heart.innerHTML === "❤" ? "#ff4e50" : "white";
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.fontSize = Math.random() * 25 + 10 + "px";
     heart.style.animationDuration = Math.random() * 3 + 2 + "s";
@@ -233,16 +209,15 @@ function createHearts() {
 
 setInterval(createHearts, 250);
 
-/* =========================
-   🎆 FIREWORKS
-========================= */
+/* 🎆 Fireworks on YES */
 function yesClicked() {
 
     document.body.innerHTML = `
     <canvas id="fireworksCanvas"></canvas>
     <div style="position:absolute; top:35%; width:100%; text-align:center; color:white;">
-        <h1 style="font-size:3rem;">She Said YES 💕</h1>
-        <p style="font-size:1.5rem;">Best decision of my life.</p>
+        <h1 style="font-size:3rem;">She Said YES 💖</h1>
+        <p style="font-size:1.5rem;">I am glad you <strong>CHOSE</strong> yes.</p>
+        <p style="font-size:1.5rem;">See you on Saturday, the 14th. 💋💋💋</p>
     </div>`;
 
     startFireworks();
@@ -288,9 +263,7 @@ function startFireworks() {
             ctx.fillStyle = `rgba(255, ${Math.random()*255}, 100, ${p.alpha})`;
             ctx.fill();
 
-            if (p.alpha <= 0) {
-                particles.splice(index, 1);
-            }
+            if (p.alpha <= 0) particles.splice(index, 1);
         });
 
         requestAnimationFrame(animate);
