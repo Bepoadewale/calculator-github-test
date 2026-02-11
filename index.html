@@ -8,7 +8,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
-/* BACKGROUND */
+
+/* =========================
+   🌌 ANIMATED BACKGROUND
+========================= */
 body {
     margin: 0;
     overflow: hidden;
@@ -26,22 +29,24 @@ body {
     100% {background-position: 0% 50%;}
 }
 
-/* GLASS CARD */
+/* =========================
+   💎 GLASS CARD
+========================= */
 .container {
     position: relative;
     z-index: 2;
     top: 20%;
-    width: 80%;
-    max-width: 700px;
+    width: 85%;
+    max-width: 750px;
     margin: auto;
-    padding: 50px;
+    padding: 60px;
     border-radius: 25px;
     background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
     box-shadow: 0 30px 60px rgba(0,0,0,0.4);
     opacity: 0;
     transform: scale(0.95);
-    animation: fadeIn 2.2s ease forwards;
+    animation: fadeIn 2s ease forwards;
 }
 
 @keyframes fadeIn {
@@ -51,7 +56,9 @@ body {
     }
 }
 
-/* TEXT */
+/* =========================
+   ✍️ TEXT STYLING
+========================= */
 h1 {
     font-family: 'Playfair Display', serif;
     font-size: 3rem;
@@ -62,9 +69,12 @@ h1 {
     font-size: 1.3rem;
     opacity: 0.9;
     margin-bottom: 30px;
+    min-height: 30px;
 }
 
-/* BUTTONS */
+/* =========================
+   🔘 BUTTONS
+========================= */
 button {
     padding: 15px 35px;
     margin: 20px;
@@ -91,15 +101,13 @@ button {
     background: #444;
     color: white;
     position: absolute;
-    padding: 14px 30px;
-    font-size: 17px;
 }
 
-/* FLOATING HEARTS + SPARKLES */
+/* =========================
+   💖 FLOATING HEARTS
+========================= */
 .heart {
     position: absolute;
-    color: #ff4e50;
-    alpha: 0.8;
     animation: floatUp linear infinite;
 }
 
@@ -113,41 +121,85 @@ button {
         opacity: 0;
     }
 }
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 </style>
 </head>
 
 <body onclick="enableSound()">
 
-<!-- MUSIC (STARTS MUTED UNTIL CLICK) -->
+<!-- 🎵 YouTube Embed -->
 <iframe id="bgmusic" width="0" height="0"
 src="https://www.youtube.com/embed/6POZlJAZsok?autoplay=1&loop=1&playlist=6POZlJAZsok&mute=1"
 frameborder="0" allow="autoplay"></iframe>
 
 <div class="container">
-    <h1>Will You Be My Valentine,<br>Eniola Onipede?</h1>
-    <p class="subtitle">My heart chose you. Always you. ❤️</p>
+    <h1 id="mainText"></h1>
+    <p class="subtitle" id="subText"></p>
     <button id="yes" onclick="yesClicked()">YES 💖</button>
     <button id="no" onmouseover="moveButton()">NO 😅</button>
 </div>
 
 <script>
-/* SOUND ENABLER */
+
+/* =========================
+   🎵 ENABLE SOUND
+========================= */
 function enableSound() {
     const iframe = document.getElementById("bgmusic");
     iframe.src = iframe.src.replace("mute=1", "mute=0");
 }
 
-/* YES CLICK → FIREWORKS & MESSAGE */
-function yesClicked() {
-    document.body.innerHTML = `
-    <div style="margin-top:25%; text-align:center;">
-        <h1 style="font-size:3rem;">She Said YES 💕</h1>
-        <p style="font-size:1.5rem;">Best decision of my life.</p>
-    </div>`;
-    for (let i = 0; i < 120; i++) createHearts();
+/* =========================
+   ✍️ TYPING EFFECT
+========================= */
+const mainMessage = "Will You Be My Valentine,";
+const nameMessage = "Eniola Onipede?";
+const subMessage = "My heart chose you. Always you. ❤️";
+
+let i = 0, j = 0, k = 0;
+
+function typeMain() {
+    if (i < mainMessage.length) {
+        document.getElementById("mainText").innerHTML += mainMessage.charAt(i);
+        i++;
+        setTimeout(typeMain, 60);
+    } else {
+        document.getElementById("mainText").innerHTML += "<br>";
+        setTimeout(typeName, 400);
+    }
 }
 
-/* RUNAWAY "NO" BUTTON */
+function typeName() {
+    if (j < nameMessage.length) {
+        document.getElementById("mainText").innerHTML += nameMessage.charAt(j);
+        j++;
+        setTimeout(typeName, 80);
+    } else {
+        setTimeout(typeSub, 600);
+    }
+}
+
+function typeSub() {
+    if (k < subMessage.length) {
+        document.getElementById("subText").innerHTML += subMessage.charAt(k);
+        k++;
+        setTimeout(typeSub, 40);
+    }
+}
+
+window.onload = () => {
+    setTimeout(typeMain, 800);
+};
+
+/* =========================
+   😅 RUNAWAY BUTTON
+========================= */
 function moveButton() {
     const button = document.getElementById("no");
     const x = Math.random() * (window.innerWidth - 120);
@@ -156,7 +208,9 @@ function moveButton() {
     button.style.top = y + "px";
 }
 
-/* HEARTS & SPARKLES */
+/* =========================
+   💖 FLOATING HEARTS
+========================= */
 function createHearts() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
@@ -166,17 +220,86 @@ function createHearts() {
         heart.style.color = "white";
     } else {
         heart.innerHTML = "❤";
+        heart.style.color = "#ff4e50";
     }
 
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 24 + 10 + "px";
+    heart.style.fontSize = Math.random() * 25 + 10 + "px";
     heart.style.animationDuration = Math.random() * 3 + 2 + "s";
-    document.body.appendChild(heart);
 
+    document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 5000);
 }
 
 setInterval(createHearts, 250);
+
+/* =========================
+   🎆 FIREWORKS
+========================= */
+function yesClicked() {
+
+    document.body.innerHTML = `
+    <canvas id="fireworksCanvas"></canvas>
+    <div style="position:absolute; top:35%; width:100%; text-align:center; color:white;">
+        <h1 style="font-size:3rem;">She Said YES 💕</h1>
+        <p style="font-size:1.5rem;">Best decision of my life.</p>
+    </div>`;
+
+    startFireworks();
+}
+
+function startFireworks() {
+    const canvas = document.getElementById("fireworksCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+
+    function createFirework() {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height / 2;
+        const count = 80;
+
+        for (let i = 0; i < count; i++) {
+            particles.push({
+                x,
+                y,
+                angle: Math.random() * 2 * Math.PI,
+                speed: Math.random() * 6 + 2,
+                radius: Math.random() * 3 + 1,
+                alpha: 1
+            });
+        }
+    }
+
+    function animate() {
+        ctx.fillStyle = "rgba(0,0,0,0.2)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach((p, index) => {
+            p.x += Math.cos(p.angle) * p.speed;
+            p.y += Math.sin(p.angle) * p.speed;
+            p.alpha -= 0.01;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, ${Math.random()*255}, 100, ${p.alpha})`;
+            ctx.fill();
+
+            if (p.alpha <= 0) {
+                particles.splice(index, 1);
+            }
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    setInterval(createFirework, 800);
+    animate();
+}
+
 </script>
 
 </body>
